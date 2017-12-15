@@ -52,7 +52,7 @@ const alias = {
 // 入口----配置
 const entry = {
     app: `${configPath.entry}/app.js`,
-    'this-is-global-file-vendor': ['vue', 'vue-router', 'vuex', 'axios'],
+    'this-is-global-file-vendor': ['vue'],
     'this-is-global-file-common': [`${configPath.entry}utils/tools.js`, `${configPath.entry}utils/applications.js`],
 };
 // 出口----配置
@@ -203,12 +203,12 @@ const webpackConfig = {
         historyApiFallback: true,
         inline: true,
         open: true,
-        port: 2555,
+        port: 3555,
         openPage: '',
         // 代理实现接口跨域
         proxy: {
             '/': { // 需要代理的路径
-                target: 'http://127.0.0.1:5552/', // 需要代理的域名
+                target: 'http://127.0.0.1:5553/', // 需要代理的域名
                 changeOrigin: true, // 必须配置为true，才能正确代理
             },
         },

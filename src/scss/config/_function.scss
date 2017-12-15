@@ -1,0 +1,11 @@
+//px转rem
+@function px2rem($px,$psd:320) {
+    // @return $px / $psd * 10rem;
+    // 非手机端,不想全局替换,所以我就直接改底层了
+    @return $px * 1px;
+}
+
+//px转px
+@function px2px($px) {
+    @return $px * 1px;
+}

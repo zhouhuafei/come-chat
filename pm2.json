@@ -1,7 +1,7 @@
 {
     "apps": [
         {
-            "name": "who-chat",
+            "name": "come-chat",
             "script": "app.js",
             "exec_mode": "fork",
             "ignore_watch": [

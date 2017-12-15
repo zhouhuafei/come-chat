@@ -1,5 +1,5 @@
 {
-    "name": "who-chat",
+    "name": "come-chat",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
@@ -18,14 +18,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/zhouhuafei/who-chat.git"
+        "url": "git+https://github.com/zhouhuafei/come-chat.git"
     },
     "author": "",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/zhouhuafei/who-chat/issues"
+        "url": "https://github.com/zhouhuafei/come-chat/issues"
     },
-    "homepage": "https://github.com/zhouhuafei/who-chat#readme",
+    "homepage": "https://github.com/zhouhuafei/come-chat#readme",
     "dependencies": {
         "express": "^4.16.2",
         "ms": "^2.1.1",

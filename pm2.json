@@ -1,0 +1,19 @@
+{
+    "apps": [
+        {
+            "name": "who-chat",
+            "script": "app.js",
+            "exec_mode": "fork",
+            "ignore_watch": [
+                "src",
+                "dist",
+                "dist-no-delete-assets-no-cache",
+                "vue"
+            ],
+            "watch": true,
+            "env": {
+                "NODE_ENV": "production"
+            }
+        }
+    ]
+}

@@ -38,7 +38,7 @@ io.on('connection', function (client) {
                     .limit(reqNowCount)
                     .exec(function (error, result) {
                         if (!error) {
-                            io.sockets.emit('resChatRecord', {
+                            client.emit('resChatRecord', {
                                 result: {
                                     data: result,
                                     nowPage: reqNowPage,

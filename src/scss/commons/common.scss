@@ -1,1 +1,52 @@
 @import "../reset/reset";
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.g-loading {
+    padding: 10px;
+    text-align: center;
+    font-size: 30px;
+    .g-loading-icon {
+        display: inline-block;
+        animation: loading 1s linear infinite;
+    }
+}
+
+.g-over {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: px2px(20) 0;
+    .g-over-icon {
+        font-size: px2px(20);
+    }
+    .g-over-text {
+        background: $g-background-color-floor;
+        position: relative;
+        z-index: 2;
+    }
+}
+
+.g-no-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: px2px(20) 0;
+    .g-no-data-icon {
+        font-size: px2px(50);
+    }
+    .g-no-data-text {
+        font-size: px2px(12);
+        padding-top: px2px(10);
+    }
+}

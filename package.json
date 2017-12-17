@@ -28,6 +28,7 @@
     "homepage": "https://github.com/zhouhuafei/come-chat#readme",
     "dependencies": {
         "express": "^4.16.2",
+        "mongoose": "^4.13.7",
         "ms": "^2.1.1",
         "qr-image": "^3.2.0",
         "socket.io": "^2.0.4",

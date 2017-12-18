@@ -4,8 +4,12 @@ import app from './app.vue';
 // 公共的样式
 require('./scss/commons/common.scss');
 
-new Vue({
-    el: '#app',
-    template: '<app></app>',
-    components: {app},
+window.addEventListener('load', function () {
+    setTimeout(function () {
+        new Vue({
+            el: '#app',
+            template: '<app></app>',
+            components: {app},
+        });
+    }, 0);
 });

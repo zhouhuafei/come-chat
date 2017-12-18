@@ -11,5 +11,5 @@ window.addEventListener('load', function () {
             template: '<app></app>',
             components: {app},
         });
-    }, 0);
+    }, 5000);
 });

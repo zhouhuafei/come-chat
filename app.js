@@ -8,11 +8,15 @@ const io = require('socket.io')(server);
 app.use(express.static('dist', {maxAge: ms('1y')})); // 托管资源文件(一年缓存)
 io.on('connection', function (client) {
     console.log('server connection open to:\n', `http://127.0.0.1:${server.address().port}`);
+    client.oldMsg = '';
     client.on('post', function (data) {
         const chats = new Chats(data);
         chats.save(function (error, result) {
             if (!error) {
-                io.sockets.emit('post', {result: result});
+                if (client.oldMsg !== result.chatMessage) {
+                    client.oldMsg = result.chatMessage;
+                    io.sockets.emit('post', {result: result});
+                }
             }
         });
     });

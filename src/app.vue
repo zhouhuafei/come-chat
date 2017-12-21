@@ -113,7 +113,8 @@
                     self.nowPage++;
                     if (self.nowPage > result.allPage) {
                         self.isLoadingOver = true;
-                        whenScrollBottom.dataLoadOver();
+                    } else {
+                        whenScrollBottom.dataLoadContinue();
                     }
                 }
             });

@@ -3,33 +3,33 @@
         <div class="tail">
             <label class="g-input">
                 <input type="text" v-model="smallTail" placeholder="custom tail">
-                <span class="icon-clear iconfont icon-qingkong" @click.prevent="fnFresh"></span>
+                <span class="iconfont icon-clear" @click.prevent="fnFresh"></span>
             </label>
         </div>
         <div class="char">
             <div class="char-item" v-for="item in chatList">
                 <div class="char-item-message">{{item.chatMessage}}</div>
                 <div class="char-item-tail">---- {{item.smallTail}}</div>
-                <div class="char-item-close iconfont icon-guanbi" @click.prevent="fnDelete(item)"></div>
+                <div class="char-item-close iconfont icon-close" @click.prevent="fnDelete(item)"></div>
             </div>
         </div>
         <div class="write">
             <form @submit="fnSubmit">
                 <label class="g-input">
                     <input type="text" v-model="chatMessage" placeholder="enter to send">
-                    <span class="icon-clear iconfont icon-qingkong" @click="fnClear"></span>
+                    <span class="iconfont icon-clear" @click="fnClear"></span>
                 </label>
             </form>
         </div>
         <div v-if="!isLoadingOver" class="g-loading">
-            <div class="g-loading-icon iconfont icon-jiazaizhong"></div>
+            <div class="g-loading-icon iconfont icon-loading"></div>
         </div>
         <div v-if="isLoadingOver && chatList.length" class="g-over">
-            <div class="g-over-icon iconfont icon-meiyoushuju"></div>
+            <div class="g-over-icon iconfont icon-no-data"></div>
             <div class="g-over-text">没有数据了</div>
         </div>
         <div v-if="isLoadingOver && !chatList.length" class="g-no-data">
-            <div class="g-no-data-icon iconfont icon-meiyoushuju"></div>
+            <div class="g-no-data-icon iconfont icon-no-data"></div>
             <div class="g-no-data-text">数据为空</div>
         </div>
     </div>

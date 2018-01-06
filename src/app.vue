@@ -156,11 +156,11 @@
             z-index: 99;
         }
         .write {
-            top: 0;
+            bottom: 0;
             z-index: 99;
         }
         .tail {
-            bottom: 0;
+            top: 0;
             z-index: 99;
         }
         .char-item {

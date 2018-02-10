@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    const client = io(`http://${location.host}`);
+    const client = io(location.host);
     const utils = require('./utils/applications');
     const tail = require('../db/smll-tail');
     export default {

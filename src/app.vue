@@ -36,8 +36,7 @@
 </template>
 
 <script>
-    // const client = io('127.0.0.1:5553'); // 开发
-    const client = io('47.100.125.178:5553'); // 生产
+    const client = io(location.host);
     const utils = require('./utils/applications');
     const tail = require('../db/smll-tail');
     export default {

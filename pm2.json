@@ -3,8 +3,7 @@
         {
             "name": "come-chat",
             "script": "app.js",
-            "exec_mode": "cluster",
-            "instances": 1,
+            "exec_mode": "fork",
             "ignore_watch": [
                 "src",
                 "dist",

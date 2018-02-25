@@ -41,7 +41,7 @@ io.on('connection', function (client) {
         const mulCalls = multipleCalls(2, function (error, json) {
             if (!error) {
                 const data = json.data;
-                const allCount = data.allCount;
+                const allCount = data.allCount - changeNum;
                 const result = data.result;
                 client.emit('resChatRecord', {
                     result: {

@@ -30,29 +30,35 @@ io.on('connection', function (client) {
             }
         });
     });
+    const multipleCalls = require('zhf.multiple-calls');
+
     client.on('reqChatRecord', function (data) {
         const reqNowPage = data.nowPage;
         const reqNowCount = data.nowCount <= 20 ? 20 : data.nowCount;
+        const mulCalls = multipleCalls(2, function (error, json) {
+            if (!error) {
+                const data = json.data;
+                const allCount = data.allCount;
+                const result = data.result;
+                client.emit('resChatRecord', {
+                    result: {
+                        data: result,
+                        nowPage: reqNowPage,
+                        nowCount: result.length,
+                        allPage: Math.ceil(allCount / reqNowCount),
+                        allCount: allCount,
+                    },
+                });
+            }
+        });
         Chats.count({}, function (error, allCount) {
             if (!error) {
-                Chats
-                    .find({})
-                    .sort({'_id': -1})
-                    .skip((reqNowPage - 1) * reqNowCount)
-                    .limit(reqNowCount)
-                    .exec(function (error, result) {
-                        if (!error) {
-                            client.emit('resChatRecord', {
-                                result: {
-                                    data: result,
-                                    nowPage: reqNowPage,
-                                    nowCount: result.length,
-                                    allPage: Math.ceil(allCount / reqNowCount),
-                                    allCount: allCount,
-                                },
-                            });
-                        }
-                    });
+                mulCalls('allCount', allCount);
+            }
+        });
+        Chats.find({}).sort({'_id': -1}).skip((reqNowPage - 1) * reqNowCount).limit(reqNowCount).exec(function (error, result) {
+            if (!error) {
+                mulCalls('result', result);
             }
         });
     });

@@ -9,20 +9,23 @@ app.use(express.static('dist', {maxAge: ms('1y')})); // 托管资源文件(一�
 io.on('connection', function (client) {
     console.log('server connection open to:\n', `http://127.0.0.1:${server.address().port}`);
     client.oldMsg = '';
+    let changeNum = 0; // 因新增或删除消息时，拉取的数据列表会出现误差，会导致数据重复和数据遗漏，这个变量就是为了修正这种问题出现的
     client.on('post', function (data) {
         const chats = new Chats(data);
-        chats.save(function (error, result) {
-            if (!error) {
-                if (client.oldMsg !== result.chatMessage) {
-                    client.oldMsg = result.chatMessage;
+        if (client.oldMsg !== data.chatMessage) {
+            client.oldMsg = data.chatMessage;
+            chats.save(function (error, result) {
+                if (!error) {
+                    changeNum++;
                     io.sockets.emit('post', {result: result});
                 }
-            }
-        });
+            });
+        }
     });
     client.on('delete', function (item) {
         Chats.remove({_id: item._id}, function (error, result) {
             if (!error) {
+                changeNum--;
                 io.sockets.emit('delete', {
                     item: item,
                     result: result,
@@ -56,7 +59,7 @@ io.on('connection', function (client) {
                 mulCalls('allCount', allCount);
             }
         });
-        Chats.find({}).sort({'_id': -1}).skip((reqNowPage - 1) * reqNowCount).limit(reqNowCount).exec(function (error, result) {
+        Chats.find({}).sort({'_id': -1}).skip((reqNowPage - 1) * reqNowCount + changeNum).limit(reqNowCount).exec(function (error, result) {
             if (!error) {
                 mulCalls('result', result);
             }

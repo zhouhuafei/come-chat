@@ -55,16 +55,16 @@
             fnSubmit: function (ev) {
                 ev.preventDefault();
                 ev.stopPropagation();
-                if (this.chatMessage && this.oldChatMessage !== this.chatMessage) {
+                // if (this.chatMessage && this.oldChatMessage !== this.chatMessage) {
                     client.emit('post', {
                         chatMessage: this.chatMessage,
                         smallTail: this.smallTail,
                     });
                     this.oldChatMessage = this.chatMessage;
                     this.chatMessage = '';
-                } else {
-                    alert('不可为空 or 发送重复的讯息');
-                }
+                // } else {
+                //    alert('不可为空 or 发送重复的讯息');
+                //}
             },
             fnClear: function () {
                 this.chatMessage = '';

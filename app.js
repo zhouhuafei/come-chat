@@ -9,14 +9,14 @@ app.use(express.static('dist', {maxAge: ms('1y')})); // 托管资源文件(一�
 io.on('connection', function (client) {
     console.log('server connection open to:\n', `http://127.0.0.1:${server.address().port}`);
     client.oldMsg = '';
-    io.changeNum = 0; // 因新增或删除消息时，拉取的数据列表会出现误差，会导致数据重复和数据遗漏，这个变量就是为了修正这种问题出现的
+    client.changeNum = 0; // 因新增或删除消息时，拉取的数据列表会出现误差，会导致数据重复和数据遗漏，这个变量就是为了修正这种问题出现的
     client.on('post', function (data) {
         const chats = new Chats(data);
         if (client.oldMsg !== data.chatMessage) {
             client.oldMsg = data.chatMessage;
             chats.save(function (error, result) {
                 if (!error) {
-                    io.changeNum++;
+                    Object.keys(io.sockets.sockets).forEach((key) => io.sockets.sockets[key].changeNum++);
                     io.sockets.emit('post', {result: result});
                 }
             });
@@ -25,7 +25,7 @@ io.on('connection', function (client) {
     client.on('delete', function (item) {
         Chats.remove({_id: item._id}, function (error, result) {
             if (!error) {
-                io.changeNum--;
+                Object.keys(io.sockets.sockets).forEach((key) => io.sockets.sockets[key].changeNum--);
                 io.sockets.emit('delete', {
                     item: item,
                     result: result,
@@ -41,7 +41,7 @@ io.on('connection', function (client) {
         const mulCalls = multipleCalls(2, function (error, json) {
             if (!error) {
                 const data = json.data;
-                const allCount = data.allCount - io.changeNum;
+                const allCount = data.allCount - client.changeNum;
                 const result = data.result;
                 client.emit('resChatRecord', {
                     result: {
@@ -59,7 +59,7 @@ io.on('connection', function (client) {
                 mulCalls('allCount', allCount);
             }
         });
-        Chats.find({}).sort({'_id': -1}).skip((reqNowPage - 1) * reqNowCount + io.changeNum).limit(reqNowCount).exec(function (error, result) {
+        Chats.find({}).sort({'_id': -1}).skip((reqNowPage - 1) * reqNowCount + client.changeNum).limit(reqNowCount).exec(function (error, result) {
             if (!error) {
                 mulCalls('result', result);
             }
